@@ -1,11 +1,11 @@
 # Github Explorer&nbsp;&nbsp;<img src="https://cdn-icons-png.flaticon.com/512/1183/1183621.png" width="50" height="auto" align="center">&nbsp;&nbsp;<img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" width="50" height="auto" align="center">
 ### 🚀 - RocketSeat Ignite
-Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como funciona o comando ```npx create-react-app <project-name>```, entenderemos toda a arquitetura de pastas de uma WebApp, para que no final de tudo isso, possemos implementar SPA de utilizando as melhores praticas do mercado e de forma fácil/limpa.
+Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como funciona o comando ```npx create-react-app <project-name>```, entenderemos toda a arquitetura de pastas de uma WebApp, para que no final de tudo isso, possemos implementar SPAs utilizando as melhores praticas do mercado e de forma fácil/limpa.
 
 ##### ⚙️ - Arquitetura do REACT
 Para esse estudo, é de suma importancia entender a estrutura de cada comando e, obviamente, o que cada um deles fazem, dentro de seus respectivos contextos.
 
-Até o momento, foi apresentado 2 comandos, que são eles:
+Até o momento, foi apresentado 3 comandos, que são eles:
 
 - ```yarn init -y```
 - ```yarn add react```
