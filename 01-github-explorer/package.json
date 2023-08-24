@@ -1,0 +1,12 @@
+{
+  "name": "01-github-explorer",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "Start of trail \"ignite\".",
+  "main": "index.js",
+  "author": "Matheus Ferreira Santos",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
