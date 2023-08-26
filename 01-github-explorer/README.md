@@ -218,7 +218,7 @@ ao rodar o comando: ```yarn webpack```, ou ```npm webpack``` *(ACREDITO QUE SEJA
 
 Esse é simplesmente impossivel de saber o que está fazendo ASHUASHUA, porém, boas noticias, **o webpack já está funcionando e está integrado com o babel!**
 
-> OBS.: O comando ```yarn webpack```, ou ```npm webpack```, pode gerar alguns alertas, mas, isso não é muito relevante e pode ser ignorado
+> OBS.: O comando ```yarn webpack```, ou ```npm webpack```, pode gerar alguns alertas, mas, isso não é muito relevante e pode ser ignorado.
 
 [Voltar para a sessão de navegação.](#navegação)
 
