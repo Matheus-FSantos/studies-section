@@ -207,7 +207,7 @@ import React from "react";
 import { App } from "./App";
 ~~~
 
-Note que ao importar o arquivo App.jsx eu não preciso informar se ele é .jsx ou js, já que no arquivo ***webpack.config.js*** configuramos a propriedade ***resolve*** que já identifica, automaticamente, que o tipo desse arquivo *./App* é ".jsx"
+> Note que ao importar o arquivo App.jsx eu não preciso informar se ele é .jsx ou js, já que no arquivo ***webpack.config.js*** configuramos a propriedade ***resolve*** que já identifica, automaticamente, que o tipo desse arquivo *./App* é ".jsx"
 
 ao rodar o comando: ```yarn webpack```, ou ```npm webpack``` *(ACREDITO QUE SEJA ESSE, POSSO ESTAR ERRADO)*, no terminal ele gerará a pasta ./dist com o arquivo index.jsx "compilado", dentro dele o código ficará assim:
 
