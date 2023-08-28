@@ -1,5 +1,3 @@
-import React from "react";
-
-export function App() {
+export default function App() {
     return <h1>Hello world!</h1>
 }
