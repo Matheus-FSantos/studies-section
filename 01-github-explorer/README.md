@@ -142,6 +142,8 @@ var app = function app() {
 **????????????????????????????????, Uma loucura do C@#$&ho!!!**
 Não vá esperando que eu adicione o que esse código está fazendo linha por linha, eu só sei que no final irá aparecer o Hello World na tela igual fizemos no componente KKKK, porém, por mais que esse código fique bastante extenso tem coisas piores por vir!
 
+<a name="webpack"></a>
+
 ##### 🌎📦 - Entendendo Webpack (Aula 03)
 
 Dentro de sua aplicação, no código JavaScript, atualmente, você pode importar outros arquivos JS dentro dele, mas com React, ou em outras libs, você não irá importar somente arquivos JS, obviamente, você acaba tendo a necessidade de importar arquivos SCSS, CSS, Imagem (png, jpg, svg) e entre outros arquivos (qualquer tipo de arquivo literalmente), e o ***webpack*** vai basicamente definir algumas configurações, que chamamos de ***LOADERS***, que *vai ensinar a aplicação como ele deve tratar cada tipo de arquivo importado e ele irá pegar cada tipo desses arquivos e irá converter para um padrão que os browsers entendem*. **O webpack trabalha semelhantemente ao babel**.
@@ -220,7 +222,446 @@ ao rodar o comando: ```yarn webpack```, ou ```npm webpack``` *(ACREDITO QUE SEJA
 
 Esse é simplesmente impossivel de saber o que está fazendo ASHUASHUA, porém, boas noticias, **o webpack já está funcionando e está integrado com o babel!**
 
-> OBS.: O comando ```yarn webpack```, ou ```npm webpack```, pode gerar alguns alertas, mas, isso não é muito relevante e pode ser ignorado.
+> OBS.: O comando ```yarn webpack```, ou ```npm webpack```, pode gerar alguns alertas, parte desses alertas é por não ter definido um cenário para as configurações do webpack (no caso só existe duas possiveis, produção e desenvolvimento), mas, isso não é muito relevante e pode ser ignorado por agora.
+
+##### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - React.JS (Aula 04)
+
+Bom, a partir desse momento já temos uma boa base sobre como funciona o Babel e como as aplicações web (no javascript) utilizam, conjuntamente, o babel e o webpack, podemos seguir para o React.JS em si.
+
+React.JS é uma biblioteca baseada no JavaScript, acredito eu que é a mais produtiva que existe no mercado, com ela, o programador, tem uma curva de aprendizado muito grande, afinal, é uma *lib* muito boa e fácil de aprender, caso você já tenha uma certa baguagem com programação.
+
+Na estrutura React, podemos perceber que tudo é trabalhado atraves de componentes, e que só existe somente 1 arquivo *.html* em todo projeto, que é o *index.html*, cujo está preenchido por:
+
+~~~ html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="./scss/global.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="../dist/bundle.js"></script>
+</body>
+</html>
+~~~
+
+> Destrinchando o código: Acima está o código html padrão de todas as aplicações React, obviamente tirando as partes que mudei que é o caso do import do meu *global.css* e a linguagem que coloquei *pt-BR*.
+
+> É possivel notar a div que contém o id igual a ***root***, explicarei mais em breve como tudo funciona, porém, o que você deve saber até o momento é que: Nela irá estar contido todo os seus componentes, afinal, ela é a div principal da aplicação.
+
+> Abaixo da div com id root tem o import do arquivo bundle.js, que na sessão de webpack (e na de babel também) explico um pouco mais sobre esse arquivo.
+
+Agora você deve estar se perguntando, "Pô, se eu tenho uma div com id root, e você informou que dentro dessa div irá conter todo os meus componentes, logo é so eu usar o getElementById do javascript e pronto, não?"
+
+Se você pensou isso, você está completamente correto! O React é JavaScript, logo, tudo que você faz no JavaScript você faz exatamente igual com ele, logo, se eu quero adicionar algo nessa div, algum componente, eu posso simplesmente fazer dessa seguinte maneira:
+
+~~~ javascript
+import React from "react";
+import { render } from "react-dom";
+
+/* Components */
+import { App } from "./App";
+
+render(<p>Hello world!</p>, document.getElementById("root"));
+~~~
+
+Você até pode passar aquele componente App que criamos anteriormente, porém, no lugar de: 
+
+~~~ javascript
+render(<p>Hello world!</p>, document.getElementById("root"));
+~~~
+
+você colocaria:
+
+~~~ javascript
+render(<App/>, document.getElementById("root"));
+~~~
+
+> OBS.: Por convenção é importante você sempre colocar o nome dos componentes em letra maiuscula para diferenciar os componentes dos elementos html
+
+> Destrinchando o código: Se você parar para analisar o codigo acima, eu simplesmente estou usando o getElementById, do **DOM** (caso você não saiba o que é, recomendo dar uma pesquisada sobre ele, já que é a base do JavaScript), para renderizar o que eu quero, nesse caso é um Hello World!.
+
+> OBS.: Para renderizarmos algo com React, deve-se obrigatóriamente importar o React e o método render, que vem la do react-dom (obviamente), na sessão de "Arquitetura do React" eu explico mais sobre ele, e usando esse método você deve passar dois parametros: o primeiro seria o que você deseja renderizar, e o segundo é onde você deseja renderizar, no meu caso, eu quero renderizar Hello World! na div com id root.
+
+> Note também que estou importando o arquivo *bundle.js*, isso representa que eu preciso dar um ```yarn webpack``` para salvar as alterações que irão ser apresentadas no *HTML*.
+
+Como dito anteriomente, em toda aplicação React você deve, obrigatóriamente, importar:
+
+~~~ javascript
+import React from "react";
+~~~
+
+porém, a uma forma de fazer com que, em tempo de compilação, o babel simplesmente faça isso para você, caso o React não esteja importado, para isso, você deve alterar o babel.config.js (falo mais sobre ele na sessão de babel) para o seguinte:
+
+~~~ javascript
+module.exports = {
+    presets: [
+        '@babel/preset-env',
+        ['@babel/preset-react', {
+            runtime: 'automatic'
+        }]
+    ]
+};
+~~~
+
+> Destrinchando o código: Note que a única alteração realizada foi no preset-react, para passar alguma configuração para algum preset, definido no babel.config.js, você deve envolver esse preset entre chaves, adicionar uma virgula após a string e passar um objeto como "segundo parametro". Nesse caso, passo *runtime: 'automatic'*, que ele faz basicamente o que tinha dito acima, caso você não importou o React em seu componente, ele importa para você sem nenhum problema.
+
+Agora, por fim, como sempre acabaremos utilizando o webpack, e as vezes ele pode ser demorado demais, podemos definir uma configuração dentro do webpack.config.js (explico mais sobre ele na sessão de webpack) para tornar a compilação mais rápida, no caso podemos adicionar: ```mode: 'development'```, no arquivo ficaria mais ou menos assim:
+
+~~~ javascript
+const path = require('path');
+
+module.exports = {
+    mode: 'development',
+    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            }
+        ],
+    }
+};
+~~~
+
+esse modo só funciona em cenário de desenvolvimento e ele basicamente evita de fazer algumas configurações nos arquivos do *./dist* para compilar consideravelmente mais rápido, o efeito colateral mais visivel é que, ele não otimiza o código gerado, por exemplo. Enfim, nada a se preocupar por agora.
+
+###### 🔨 - Melhorando o arquivo estático (index.html)
+
+Caso você tenha notádo, no index.html estamos referenciando o arquivo bundle da aplicação de forma *hard code*, porém, se por um motivo do além nos mudassemos esse arquivo, o nome dele, a aplicação pararia de funcionar, para tornar isso mais seguro, previnir um erro desse, existe um plugin do webpack que injeta esse arquivo compilado no nosso HTML para que nós não precisemos nós preocupar com isso.
+
+Para baixar esse plugin, devemos rodar o seguinte comando: ```yarn add html-webpack-plugin```, caso use npm acredito que seja: ```npm install html-webpack-plugin```.
+
+e para configurar ele é muito simples, deve-se importar esse plugin, dentro do arquivo webpack.config.js, da seguinte maneira:
+
+~~~ javascript
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+~~~
+
+e na sequencia informar o template padrão para essa configuração do webpack (lembrando que esse webpack é o que transformar o nosso index.jsx em bundle.js então ele meio que sabe que tu quer adicionar o bundle dentro do template informado), dessa seguinte maneira:
+
+~~~ javascript
+plugins: [
+        new HtmlWebpackPlugin({template: path.resolve(__dirname, 'public', 'index.html')
+    })
+]
+~~~
+
+o que irá resultar em um arquivo webpack.config.js mais ou menos assim:
+
+~~~ javascript
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    mode: 'development',
+    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            }
+        ],
+    }
+};
+~~~
+
+e quando tu der novamente um ```yarn webpack``` ele irá gerar um index.html dentro da pasta *./dist* que, dentro dele, conterá justamente o arquivo bundle.js como um passe de mágica!
+
+**CLEAN DEMAIS 👌!!!** 
+
+> OBS.: Quando for abrir o index.html, abra o da pasta ./dist e não o da pasta ./public
+
+
+###### 🔄 - Adicionando o dev server (para auto-reload)
+
+Caso você tenha notado, a cada alteração do nosso projeto devemos rodar o ```yarn webpack``` para recarregar o arquivo bundle.js e ai sim ser adicionado, no index.html (do diretório ./dist), as novas alterações. Para tornar isso mais prático, podemos adicionar o ***webpack-dev-server***, que irá funcionar igual ao ***DevTools*** do Spring. Ele irá ficar monitorando a sua aplicação e quando você, como programador, alterar algo, em seu código fonte, o webpack já irá recarregar automaticamente, perfeito demais se ta doido!
+
+Para isso, deve-se instalar o dev-server, com o seguinte comando: ```yarn add webpack-dev-server -D```, caso esteja no npm acredito eu que seja: ```npm install webpack-dev-server -D```, e ele irá fazer justamente o que falei acima, recarregar sua aplicação automaticamente, quando tiver uma alteração em cenário de desenvolvimento.
+
+Para configurar ele, deve-se adicionar a seguinte instrução, dentro do webpack.config.js:
+
+~~~ javascript
+devServer: {
+    static: path.resolve(__dirname, 'public')
+} 
+~~~
+
+deixando arquivo webpack.config.js mais ou menos assim:
+
+~~~ javascript
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    mode: 'development',
+    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+        static: path.resolve(__dirname, 'public')
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            }
+        ],
+    }
+};
+~~~
+
+Referente ao código de configuração, ele basicamente irá informar aonde que fica a pasta do arquivo index.html da nossa aplicação.
+
+Ao rodar o comando ```yarn webpack serve``` o dev-server já deve estar funcionando, para saber se funcionou, rode o seguinte comando e abra o navegador na porta: localhost:8080 (geralmente aparece essa mesma porta na primeira linha após tu rodar o comando webpack serve).
+
+###### 🗺️ - Configurando o source-map
+
+O Source map basicamente é uma forma da gente, como programador, conseguir visualizar o código original da aplicação, mesmo quando todo o código da aplicação está embaralhado por conta do bundle.js.
+
+Caso sua aplicação retorne um erro, da maneira que está hoje, e tu for verificar, pelo navegador, onde está dando erro, ele irá aparecer de uma forma muito enconveniente, exemplo: no componente abaixo adicionei um erro, proposital, de forma estática
+
+~~~ javascript
+export default function App() {
+    throw new Error('Ops!!!')
+    return <h1>Hello world!</h1>
+}
+~~~
+
+vendo o código fonte é muito nitido que o erro está na linha 2, logo, é so remover-lo que o erro irá sair, porém, se nós abrirmos o console, ele irá informar o seguinte:
+
+![Alt text](image.png)
+
+Informou que aconteceu um erro na linha 2 do arquivo App.jsx (essa linha geralmente diverge), e ao dar um clique em *App.jsx:2* ele deveria retornar o código exatamente como o abaixo
+
+~~~ javascript
+export default function App() {
+    throw new Error('Ops!!!')
+    return <h1>Hello world!</h1>
+}
+~~~
+
+afinal, é o que contem nele, certo? Errado, ele irá retornar:
+
+~~~ javascript
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ App)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+function App() {
+  throw new Error('Ops!!!');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
+    children: "Hello world!"
+  });
+}//# sourceURL=[module]
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvQXBwLmpzeCIsIm1hcHBpbmdzIjoiOzs7Ozs7QUFBZSxTQUFTQSxHQUFHQSxDQUFBLEVBQUc7RUFDMUIsTUFBTSxJQUFJQyxLQUFLLENBQUMsUUFBUSxDQUFDO0VBQ3pCLG9CQUFPQyxzREFBQTtJQUFBQyxRQUFBLEVBQUk7RUFBWSxDQUFJLENBQUM7QUFDaEMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8wMS1naXRodWItZXhwbG9yZXIvLi9zcmMvQXBwLmpzeD8xNTkxIl0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIEFwcCgpIHtcbiAgICB0aHJvdyBuZXcgRXJyb3IoJ09wcyEhIScpXG4gICAgcmV0dXJuIDxoMT5IZWxsbyB3b3JsZCE8L2gxPlxufVxuIl0sIm5hbWVzIjpbIkFwcCIsIkVycm9yIiwiX2pzeCIsImNoaWxkcmVuIl0sInNvdXJjZVJvb3QiOiIifQ==
+//# sourceURL=webpack-internal:///./src/App.jsx
+~~~
+
+Isso acontece porque o código foi compilado pelo webpack e, obviamente, esse código acima é o código que ele gerou a partir da nossa aplicação. Para isso que adicionamos o source map, para podermos visualizar o código da nossa aplicação da forma que ele realmente é.
+
+Para configurar o source map deve-se adicionar a seguinte instrução dentro do webpack.config.js:
+
+~~~ javascript
+devtool: 'eval-source-map',
+~~~
+
+O que resultará em um webpack.config.js mais ou menos assim:
+
+~~~ javascript
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    mode: 'development',
+    devtool: 'eval-source-map',
+    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+        static: path.resolve(__dirname, 'public')
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            }
+        ],
+    }
+};
+~~~
+
+e ao rodar novamente o código, sem alterar o erro, ao verificar novamente o arquivo, irá aparecer da seguinte forma:
+
+![Alt text](image-1.png)
+
+Exatamente igual ao componente do projeto!!!
+
+###### 🏭 - Ambiente de Desenvolvimento e Produção
+
+Nessa sessão iremos configurar os ambientes da nossa aplicação, porque, caso seja de desenvolvimento ela irá se comportar de uma forma e se for produção se comportará de outra forma.
+
+Dentro do arquivo webpack.config.js deve-se conter a seguinte instrução:
+
+~~~ javascript
+const isDevelopment = process.env.NODE_ENV !== 'production';
+~~~
+
+e atualizar os campos ```mode``` e ```devtool``` deixando eles da seguinte maneira:
+
+~~~ javascript
+mode: isDevelopment ? 'development' : 'production',
+devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+~~~
+
+deixando o arquivo webpack.config.js mais ou menos assim:
+
+~~~ javascript
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+module.exports = {
+    mode: isDevelopment ? 'development' : 'production',
+    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+        static: path.resolve(__dirname, 'public')
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            }
+        ],
+    }
+};
+~~~
+
+Porém, se notarmos bem, a variavel *isDevelopment* está puxando uma configuração presente dentro do .env da nossa aplicação, porém, não existe nenhum .env na aplicação, então, devemos criar ele da seguinte maneira:
+
+Caso esteja em um ambiente unix (linux e mac) so de dar o seguinte comando: ```NODE_ENV=production``` e concatenar com o comando ```yarn webpack``` se tornando assim: ```NODE_ENV=production yarn webpack``` ele já funcionará acionando o modo de produção em sua aplicação, já no windows é diferente.
+
+Geralmente quando tu roda o comando acima ele gera um ***bundle.js.map***, em desenvolvimento ele já omite esse arquivo.
+
+Para padronizar a aplicação, iremos baixar a dependencia cross-env. Para baixar essa dependencia deve-se rodar o seguinte comando: ```yarn add cross-env -D```, ou: ```npm install cross-env -D```.
+
+Esse cross-env serve para você, como programador, definir variáveis de ambiente independente do sistema operacional da pessoa.
+
+Vá até o *package.json* e adicione alguns scripts bases para o projeto (semelhantemente aos do nodemon), eles devem ficar da seguinte maneira:
+
+~~~ json
+"scripts": {
+    "dev": "webpack serve",
+    "build": "cross-env NODE_ENV=production webpack"
+}
+~~~
+
+onde, quando você der o comando ```yarn run dev``` ele irá executar exatamente os scripts que estão ao lado, ou seja: ```webpack serve``` que irá executar, como contrapartida, o ***webpack-dev-server***.
+
+O arquivo package.json ficará basicamente assim:
+
+~~~ json
+{
+  "name": "01-github-explorer",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "Start of trail \"ignite\".",
+  "main": "index.js",
+  "author": "Matheus Ferreira Santos",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack serve",
+    "build": "cross-env NODE_ENV=production webpack"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.10",
+    "@babel/core": "^7.22.11",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.3",
+    "cross-env": "^7.0.3",
+    "html-webpack-plugin": "^5.5.3",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
+~~~
+
+> Destrinchando o código: o código ```cross-env NODE_ENV=production webpack``` utiliza o cross-env para criar uma variável *NODE_ENV* que conterá como valor: *production*, executa o webpack (apenas para compilar todo o código gerado) e gerar uma versão de produção do seu sistema, mamão com açúcar!
 
 [Voltar para a sessão de navegação.](#navegação)
 
