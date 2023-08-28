@@ -11,16 +11,18 @@ Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como
 ###### Navegação:
 É possivel que parte da nevagação ainda não esteja funcionando, porém, relevem.
 
-- [Aula 01 - Arquitetura do REACT](#⚙️---arquitetura-do-react-aula-01)
-- [Aula 02 - Babel](#🌐---entendendo-babel-aula-02)
-- [Aula 03 - Webpack](#🌎📦---entendendo-webpack-aula-03)
-- [Aula 04 - React.JS](#reactjs-aula-04)
-    - [Aula 04.1 - Auto-import do React nos arquivos](#auto-import-do-react)
-    - [Aula 04.2 - Build mais rápido no escopo de desenvolvimento (parte 01)](#build-mais-rápido-no-escopo-de-desenvolvimento-parte-01)
-    - [Aula 04.3 - Melhorando o arquivo estático (index.html)](#🔨---melhorando-o-arquivo-estático-indexhtml)
-    - [Aula 04.4 - Adicionando o dev server (para auto-reload)](#🔄---adicionando-o-dev-server-para-auto-reload)
-    - [Aula 04.5 - Configurando o source-map](#🗺️---configurando-o-source-map)
-    - [Aula 04.6 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)](#🏭---ambiente-de-desenvolvimento-e-produção-com-cross-env-parte-02)
+- [Aula 01 - Arquitetura do REACT](#arquitetura)
+- [Aula 02 - Babel](#babel)
+- [Aula 03 - Webpack](#webpack)
+- [Aula 04 - React.JS](#reactjs)
+    - [Aula 04.1 - Auto-import do React nos arquivos](#auto-import)
+    - [Aula 04.2 - Build mais rápido no escopo de desenvolvimento (parte 01)](#scope-pt-1)
+    - [Aula 04.3 - Melhorando o arquivo estático (index.html)](#html-webpack-plugin)
+    - [Aula 04.4 - Adicionando o dev server (para auto-reload)](#dev-server)
+    - [Aula 04.5 - Configurando o source-map](#)
+    - [Aula 04.6 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)](#cross-env)
+
+<a name="arquitetura"></a>
 
 ##### ⚙️ - Arquitetura do REACT (Aula 01)
 
@@ -43,6 +45,8 @@ O último comando dessa lista é o: ```yarn add react-dom```, caso esteja usando
 > OBS.: Como estamos desenvolvendo com REACT para WEB então se faz necessário baixar essa dependencia que citamos acima, porém, se estivesse criando a arquitetura do 0, como foi proposto nesse repositorio, e estivesse criando um projeto REACT para MOBILE, ao invés de baixar o yarn add react você substituiria por yarn add react-native, já que com React Native você é capaz de criar aplicações mobile fantásticas de forma muito eficiente e produtiva e com uma curva de aprendizado fantástica.
 
 Até então é isso, essa foi a primeira aula da Trilha Ignite da RocketSeat onde, como principal objetivo, podemos análisar, de forma superficial, como funciona a arquitetura do REACT. Provavelmente em aulas futuras, ou até mesmo posterior a essa, continuaremos explorando essa arquitetura.
+
+<a name="babel"></a>
 
 ##### 🌐 - Entendendo BABEL (Aula 02)
 
@@ -145,6 +149,9 @@ var app = function app() {
 **????????????????????????????????, Uma loucura do C@#$&ho!!!**
 Não vá esperando que eu adicione o que esse código está fazendo linha por linha, eu só sei que no final irá aparecer o Hello World na tela igual fizemos no componente KKKK, porém, por mais que esse código fique bastante extenso tem coisas piores por vir!
 
+
+<a name="webpack"></a>
+
 ##### 🌎📦 - Entendendo Webpack (Aula 03)
 
 Dentro de sua aplicação, no código JavaScript, atualmente, você pode importar outros arquivos JS dentro dele, mas com React, ou em outras libs, você não irá importar somente arquivos JS, obviamente, você acaba tendo a necessidade de importar arquivos SCSS, CSS, Imagem (png, jpg, svg) e entre outros arquivos (qualquer tipo de arquivo literalmente), e o ***webpack*** vai basicamente definir algumas configurações, que chamamos de ***LOADERS***, que *vai ensinar a aplicação como ele deve tratar cada tipo de arquivo importado e ele irá pegar cada tipo desses arquivos e irá converter para um padrão que os browsers entendem*. **O webpack trabalha semelhantemente ao babel**.
@@ -225,6 +232,8 @@ Esse é simplesmente impossivel de saber o que está fazendo ASHUASHUA, porém, 
 
 > OBS.: O comando ```yarn webpack```, ou ```npm webpack```, pode gerar alguns alertas, parte desses alertas é por não ter definido um cenário para as configurações do webpack (no caso só existe duas possiveis, produção e desenvolvimento), mas, isso não é muito relevante e pode ser ignorado por agora.
 
+<a name="reactjs"></a>
+
 ##### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - React.JS (Aula 04)
 
 Bom, a partir desse momento já temos uma boa base sobre como funciona o Babel e como as aplicações web (no javascript) utilizam, conjuntamente, o babel e o webpack, podemos seguir para o React.JS em si.
@@ -256,6 +265,8 @@ Na estrutura React, podemos perceber que tudo é trabalhado atraves de component
 > É possivel notar a div que contém o id igual a ***root***, explicarei mais em breve como tudo funciona, porém, o que você deve saber até o momento é que: Nela irá estar contido todo os seus componentes, afinal, ela é a div principal da aplicação.
 
 > Abaixo da div com id root tem o import do arquivo bundle.js, que na sessão de webpack (e na de babel também) explico um pouco mais sobre esse arquivo.
+
+<a name="auto-import"></a>
 
 ###### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - Auto-import do React
 
@@ -314,6 +325,8 @@ module.exports = {
 
 > Destrinchando o código: Note que a única alteração realizada foi no preset-react, para passar alguma configuração para algum preset, definido no babel.config.js, você deve envolver esse preset entre chaves, adicionar uma virgula após a string e passar um objeto como "segundo parametro". Nesse caso, passo *runtime: 'automatic'*, que ele faz basicamente o que tinha dito acima, caso você não importou o React em seu componente, ele importa para você sem nenhum problema.
 
+<a name="scope-pt-1"></a>
+
 ###### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - Build mais rápido no escopo de desenvolvimento (Parte 01)
 
 Como sempre acabaremos utilizando o webpack, e as vezes ele pode ser demorado demais, podemos definir uma configuração dentro do webpack.config.js (explico mais sobre ele na sessão de webpack) para tornar a compilação mais rápida, no caso podemos adicionar: ```mode: 'development'```, no arquivo ficaria mais ou menos assim:
@@ -344,6 +357,8 @@ module.exports = {
 ~~~
 
 esse modo só funciona em cenário de desenvolvimento e ele basicamente evita de fazer algumas configurações nos arquivos do *./dist* para compilar consideravelmente mais rápido, o efeito colateral mais visivel é que, ele não otimiza o código gerado, por exemplo. Enfim, nada a se preocupar por agora.
+
+<a name="html-webpack-plugin"></a>
 
 ###### 🔨 - Melhorando o arquivo estático (index.html)
 
@@ -461,6 +476,8 @@ Referente ao código de configuração, ele basicamente irá informar aonde que 
 
 Ao rodar o comando ```yarn webpack serve``` o dev-server já deve estar funcionando, para saber se funcionou, rode o seguinte comando e abra o navegador na porta: localhost:8080 (geralmente aparece essa mesma porta na primeira linha após tu rodar o comando webpack serve).
 
+<a name="source-map"></a>
+
 ###### 🗺️ - Configurando o source-map
 
 O Source map basicamente é uma forma da gente, como programador, conseguir visualizar o código original da aplicação, mesmo quando todo o código da aplicação está embaralhado por conta do bundle.js.
@@ -556,6 +573,8 @@ e ao rodar novamente o código, sem alterar o erro, ao verificar novamente o arq
 ![Alt text](image-1.png)
 
 Exatamente igual ao componente do projeto!!!
+
+<a name="cross-env"></a>
 
 ###### 🏭 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)
 
