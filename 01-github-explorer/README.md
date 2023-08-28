@@ -11,11 +11,16 @@ Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como
 ###### Navegação:
 É possivel que parte da nevagação ainda não esteja funcionando, porém, relevem.
 
-- [Aula 01 - Arquitetura do REACT](#arquitetura)
-- [Aula 02 - Babel](#babeljs)
-- [Aula 03 - Webpack](#webpack)
-
-<a name="arquitetura"></a>
+- [Aula 01 - Arquitetura do REACT](#⚙️---arquitetura-do-react-aula-01)
+- [Aula 02 - Babel](#🌐---entendendo-babel-aula-02)
+- [Aula 03 - Webpack](#🌎📦---entendendo-webpack-aula-03)
+- [Aula 04 - React.JS](#reactjs-aula-04)
+    - [Aula 04.1 - Auto-import do React nos arquivos](#auto-import-do-react)
+    - [Aula 04.2 - Build mais rápido no escopo de desenvolvimento (parte 01)](#build-mais-rápido-no-escopo-de-desenvolvimento-parte-01)
+    - [Aula 04.3 - Melhorando o arquivo estático (index.html)](#🔨---melhorando-o-arquivo-estático-indexhtml)
+    - [Aula 04.4 - Adicionando o dev server (para auto-reload)](#🔄---adicionando-o-dev-server-para-auto-reload)
+    - [Aula 04.5 - Configurando o source-map](#🗺️---configurando-o-source-map)
+    - [Aula 04.6 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)](#🏭---ambiente-de-desenvolvimento-e-produção-com-cross-env-parte-02)
 
 ##### ⚙️ - Arquitetura do REACT (Aula 01)
 
@@ -38,8 +43,6 @@ O último comando dessa lista é o: ```yarn add react-dom```, caso esteja usando
 > OBS.: Como estamos desenvolvendo com REACT para WEB então se faz necessário baixar essa dependencia que citamos acima, porém, se estivesse criando a arquitetura do 0, como foi proposto nesse repositorio, e estivesse criando um projeto REACT para MOBILE, ao invés de baixar o yarn add react você substituiria por yarn add react-native, já que com React Native você é capaz de criar aplicações mobile fantásticas de forma muito eficiente e produtiva e com uma curva de aprendizado fantástica.
 
 Até então é isso, essa foi a primeira aula da Trilha Ignite da RocketSeat onde, como principal objetivo, podemos análisar, de forma superficial, como funciona a arquitetura do REACT. Provavelmente em aulas futuras, ou até mesmo posterior a essa, continuaremos explorando essa arquitetura.
-
-<a name="babeljs"></a>
 
 ##### 🌐 - Entendendo BABEL (Aula 02)
 
@@ -141,8 +144,6 @@ var app = function app() {
 
 **????????????????????????????????, Uma loucura do C@#$&ho!!!**
 Não vá esperando que eu adicione o que esse código está fazendo linha por linha, eu só sei que no final irá aparecer o Hello World na tela igual fizemos no componente KKKK, porém, por mais que esse código fique bastante extenso tem coisas piores por vir!
-
-<a name="webpack"></a>
 
 ##### 🌎📦 - Entendendo Webpack (Aula 03)
 
@@ -256,6 +257,8 @@ Na estrutura React, podemos perceber que tudo é trabalhado atraves de component
 
 > Abaixo da div com id root tem o import do arquivo bundle.js, que na sessão de webpack (e na de babel também) explico um pouco mais sobre esse arquivo.
 
+###### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - Auto-import do React
+
 Agora você deve estar se perguntando, "Pô, se eu tenho uma div com id root, e você informou que dentro dessa div irá conter todo os meus componentes, logo é so eu usar o getElementById do javascript e pronto, não?"
 
 Se você pensou isso, você está completamente correto! O React é JavaScript, logo, tudo que você faz no JavaScript você faz exatamente igual com ele, logo, se eu quero adicionar algo nessa div, algum componente, eu posso simplesmente fazer dessa seguinte maneira:
@@ -311,7 +314,9 @@ module.exports = {
 
 > Destrinchando o código: Note que a única alteração realizada foi no preset-react, para passar alguma configuração para algum preset, definido no babel.config.js, você deve envolver esse preset entre chaves, adicionar uma virgula após a string e passar um objeto como "segundo parametro". Nesse caso, passo *runtime: 'automatic'*, que ele faz basicamente o que tinha dito acima, caso você não importou o React em seu componente, ele importa para você sem nenhum problema.
 
-Agora, por fim, como sempre acabaremos utilizando o webpack, e as vezes ele pode ser demorado demais, podemos definir uma configuração dentro do webpack.config.js (explico mais sobre ele na sessão de webpack) para tornar a compilação mais rápida, no caso podemos adicionar: ```mode: 'development'```, no arquivo ficaria mais ou menos assim:
+###### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - Build mais rápido no escopo de desenvolvimento (Parte 01)
+
+Como sempre acabaremos utilizando o webpack, e as vezes ele pode ser demorado demais, podemos definir uma configuração dentro do webpack.config.js (explico mais sobre ele na sessão de webpack) para tornar a compilação mais rápida, no caso podemos adicionar: ```mode: 'development'```, no arquivo ficaria mais ou menos assim:
 
 ~~~ javascript
 const path = require('path');
@@ -400,6 +405,7 @@ e quando tu der novamente um ```yarn webpack``` ele irá gerar um index.html den
 
 > OBS.: Quando for abrir o index.html, abra o da pasta ./dist e não o da pasta ./public
 
+<a name="dev-server"></a>
 
 ###### 🔄 - Adicionando o dev server (para auto-reload)
 
@@ -551,7 +557,7 @@ e ao rodar novamente o código, sem alterar o erro, ao verificar novamente o arq
 
 Exatamente igual ao componente do projeto!!!
 
-###### 🏭 - Ambiente de Desenvolvimento e Produção
+###### 🏭 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)
 
 Nessa sessão iremos configurar os ambientes da nossa aplicação, porque, caso seja de desenvolvimento ela irá se comportar de uma forma e se for produção se comportará de outra forma.
 
