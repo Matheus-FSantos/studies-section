@@ -19,7 +19,7 @@ Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como
     - [Aula 04.2 - Build mais rápido no escopo de desenvolvimento (parte 01)](#scope-pt-1)
     - [Aula 04.3 - Melhorando o arquivo estático (index.html)](#html-webpack-plugin)
     - [Aula 04.4 - Adicionando o dev server (para auto-reload)](#dev-server)
-    - [Aula 04.5 - Configurando o source-map](#)
+    - [Aula 04.5 - Configurando o source-map](#source-map)
     - [Aula 04.6 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)](#cross-env)
 
 <a name="arquitetura"></a>
