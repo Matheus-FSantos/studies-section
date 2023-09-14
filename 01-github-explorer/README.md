@@ -21,6 +21,7 @@ Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como
     - [Aula 04.4 - Adicionando o dev server (para auto-reload)](#dev-server)
     - [Aula 04.5 - Configurando o source-map](#source-map)
     - [Aula 04.6 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)](#cross-env)
+    - [Aula 04.7 - Folhas de estilo (style-loader e css-loader)](#style-loader&css-loader)
 
 <a name="arquitetura"></a>
 
@@ -688,9 +689,129 @@ O arquivo package.json ficará basicamente assim:
 
 > Destrinchando o código: o código ```cross-env NODE_ENV=production webpack``` utiliza o cross-env para criar uma variável *NODE_ENV* que conterá como valor: *production*, executa o webpack (apenas para compilar todo o código gerado) e gerar uma versão de produção do seu sistema, mamão com açúcar!
 
+<a name="style-loader&css-loader"></a>
+
+###### 🖌️ - Folhas de estilo (style-loader, css-loader)
+
+Folhas de estilo, em uma página web, é a parte mais importante no desenvolvimento, afinal, é com ela que você, programador, consegue dar vida ao site e consegue, obviamente, estilizar e passar "a cara" da empresa para o seu design, falando em um ambito mais empresárial.
+
+Quando nós configuramos o webpack, em algumas sessões atrás, é possivel notar que fizemos uma configuração, definimos regras (rules), para o que a aplicação deve fazer quando encontrar aquivos com a extensão ***.jsx***, que, obviamente², não é interpretado pela aplicação normalmente (sem prévias configurações para o babel compilar-los).
+
+Nessa sessão iremos fazer o mesmo, porém, não será para extensões ***.jsx*** e sim para extensões ***.css***.
+
+Se adentrar dentro do seu arquivo ***webpack.config.js*** ele possivelmente estará assim:
+
+~~~ javascript
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+module.exports = {
+    mode: isDevelopment ? 'development' : 'production',
+    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+        static: path.resolve(__dirname, 'public')
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            }
+        ],
+    }
+};
+~~~
+
+Até então é possivel notar que fizemos configurações para que os arquivos ***.jsx*** sejam interpretados como arquivos ***.js*** e que, ema algum momento do ciclo de desenvolvimento, quando a aplicação for empacotada o sistema gerará um arquivo ***bundle.js*** que estará contido em: **"/dist"**.
+
+> Se não sabe para que serve o webpack, algumas sessões atrás eu explico melhor como funciona e como configurar, mas em resumo: Trabalha em conjunto do Babel, que também explico mais a fundo em tópicos anteriores a esse, para fazer com que seus códigos, escritos com frameworks e bibliotecas atuais, sejam entendidos e interpretados pelos navegadores mais utilizados na internet, reduzindo assim possiveis erros por versões de código ou por arquivos que navegadores não entendam.
+
+Agora que já entendemos o contexto em que estamos precisamos configurar os arquivos .css para que eles consigam ser interpretados pela nossa aplicação e assim conseguirmos estilizar tudo perfeitamente. Isso não é uma tarefa muito complicado, por padrão, arquivos ***.jsx*** definimos que ele será "compilados" através do *babel-loader*, é possivel ver isso em: ```use: 'babel-loader'```. Normalmente arquivos ***.css*** utilizam 2 loaders diferentes, que são eles:
+
+- [X] style-loader;
+- [X] css-loader.
+
+Ambos trabalham em conjunto, no ambiente de desenvolvimento, para fazer com que sua aplicação funcione 100% da forma desejada.
+
+Agora que já sabemos que precisamos de ambos dos *loaders* devemos instalar-los, e para adicionar a dependencia deles, deve-mos usar: ```yarn add style-loader css-loader -D``` e definir mais uma regra dentro do arquivo *webpack.config.js*, a seguinte regra é exatamente igual ao dos arquivos ***.jsx***, porém, como precisamos de 2 loaders diferentes, devemos usar um array no **use**, ele ficará assim:
+
+~~~ javascript
+module: {
+    rules: [
+        {
+            test: /\.jsx$/,
+            exclude: /node_modules/,
+            use: ['style-loader', 'css-loader']
+        }
+    ]
+}
+~~~
+
+O arquivo final resultará em:
+
+~~~ javascript
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+module.exports = {
+    mode: isDevelopment ? 'development' : 'production',
+    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+        static: path.resolve(__dirname, 'public')
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: ['style-loader', 'css-loader']
+            }
+        ],
+    }
+};
+~~~
+
+E pronto! Sua aplicação estará pronta para utilização de arquivos de estilização!!!
+
 [Voltar para a sessão de navegação.](#navegação)
 
 ##### ❓ - Informações
 > Nome: Matheus Ferreira Santos.
-> Trilha: RocketSeat Ignite - Trilha REACT JS.
+> Trilha: RocketSeat Ignite - Trilha React.JS.
 > Data Inicial: Quinta-Feira, 24 de agosto de 2023. 
