@@ -3,10 +3,12 @@ import { createRoot } from "react-dom/client";
 /* Components */
 import App from "./App";
 
+import RepositoryList from "./components/RepositoryList";
+
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-    <App />
+    <RepositoryList />
 );
