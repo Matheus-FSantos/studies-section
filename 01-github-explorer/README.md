@@ -14,7 +14,7 @@ Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como
 - [Aula 01 - Arquitetura do REACT](#arquitetura)
 - [Aula 02 - Babel](#babel)
 - [Aula 03 - Webpack](#webpack)
-- [Aula 04 - Configurando o React.JS](#reactjs)
+- [Aula 04 - Configurando o React.JS](#setup-reactjs)
     - [Aula 04.1 - Auto-import do React nos arquivos](#auto-import)
     - [Aula 04.2 - Build mais rápido no escopo de desenvolvimento (parte 01)](#scope-pt-1)
     - [Aula 04.3 - Melhorando o arquivo estático (index.html)](#html-webpack-plugin)
@@ -22,8 +22,10 @@ Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como
     - [Aula 04.5 - Configurando o source-map](#source-map)
     - [Aula 04.6 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)](#cross-env)
     - [Aula 04.7 - Folhas de estilo (style-loader e css-loader)](#style-loader&css-loader)
-    - [Aula 04.7 - Folhas de estilo (sass-loader e node-sass, NÃO FUNCIONANDO AINDA)](#sass-loader&node-sass)
-
+    - [Aula 04.8 - Folhas de estilo (sass-loader e node-sass, NÃO FUNCIONANDO AINDA)](#sass-loader&node-sass)
+- [Aula 05 - React.JS](#reactjs)
+    - [Aula 5.01.01 - Componentes React](#reactjs-componentes);
+    - [Aula 5.01.02 - Introdução ao JSX](#reactjs-jsx)
 <a name="arquitetura"></a>
 
 ##### ⚙️ - Arquitetura do REACT (Aula 01)
@@ -234,7 +236,7 @@ Esse é simplesmente impossivel de saber o que está fazendo ASHUASHUA, porém, 
 
 > OBS.: O comando ```yarn webpack```, ou ```npm webpack```, pode gerar alguns alertas, parte desses alertas é por não ter definido um cenário para as configurações do webpack (no caso só existe duas possiveis, produção e desenvolvimento), mas, isso não é muito relevante e pode ser ignorado por agora.
 
-<a name="reactjs"></a>
+<a name="setup-reactjs"></a>
 
 ##### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - Configurando o React.JS (Aula 04)
 
@@ -915,6 +917,213 @@ module.exports = {
 ***Isso permitirá que sua aplicação funcione tanto com arquivos .css e arquivos .scss.***
 
 > Caso queira que sua aplicação funcione somente com arquivos .scss, exclua a regra para os arquivos que tem extensões .css, e vice-versa.
+
+<a name="reactjs"></a>
+
+##### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - React.JS (Aula 05)
+
+Bom, agora oficialmente iremos começar a adentrar mais a fundo no React, e para isso, como primeira lição, precisamos entender o que é um *Componente*
+
+<a name="reactjs-componentes"></a>
+
+###### 🧩 - Componentes no React
+
+Bom, a grosso modo, componentes são formas de nós, programadores, encapsularmos uma quantidade de código dentro de um unico elemento e esse elemento tem sua propria estilização, sua propria funcionalidade. Componentes são formas da gente repartir a nossa aplicação em vários pedacinhos pequenos que juntos, de outros componentes, formam algo maior, o seu site.
+
+O mais incrivel disso é que você pode simplesmente chamar o componente pelo nome e tudo que estiver dentro dele já vem junto automaticamente, com a estilização que você definiu, com as regras de négocio/lógica que você, ou o cliente, definiu e, com isso, sua aplicação fica muito mais simples de dar manutenção e desenvolver novas features.
+
+Nós, por incrivel que pareca, já criamos um componente anteriormente, o App.jsx, onde ele basicamente retorna um titulo Hello World, porém, lá dentro eu poderia, por exemplo, retornar um componente de cabeçalho, que eu poderia reutilizar ao longo de todo fluxo do meu sistema, isso é algo fantástico!
+
+E o mais engraçado que: Po, eu to criando um componente, então ele necessáriamente tem que ter tudo que eu preciso lá, certo? Eu não posso reutilizar outros componentes para criar meus componentes, certo?
+
+Errado, você pode montar por exemplo, um componente de cabeçalho, que dentro dele tem um componente de menu responsivo, para celular, e outro menu responsivo, para computador, e ir apresentando cada um quando for necessário, o ponto é: **componentes podem ter um ou mais componentes dentro dele, e esse componentes, por sua vez, podem ter um ou mais componentes dentro deles** e assim vai indo infinitamente. 
+
+Componentes no React seguem duas regras (convenções) básicas, e elas são:
+
+- [X] Arquivos, que representam componentes, sempre devem começar com a letra maiuscula (ex.: App.jsx, Header.jsx, Slide.jsx);
+- [X] Arquivos, que representam componentes, só podem ter no máximo um componente contido dentro dele.
+
+Bom, agora iremos criar o primeiro (o primeiro real oficial AUSHDSAU) componente da aplicação, que será um RepositoryList (que pelo nome deve listar uma lista de repositorios, obviamente essa lista de repositorios será totalmente fake, porém, finja que ela realmente exista)
+
+~~~ javascript
+export default function RepositoryList() {
+    return(
+        <section className="repository-list">
+            <h1>Lista de repositórios</h1>
+
+            <ul>
+                <li>
+                    <strong>unform</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>unform</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>unform</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>unform</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>unform</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>unform</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+            </ul>
+        </section>
+    );
+}
+~~~
+
+Componente criado, e agora é so chamar ele no arquivo root da nossa aplicação, ou seja, no index.jsx, da seguinte forma:
+
+~~~ javascript
+import { createRoot } from "react-dom/client";
+
+/* Components */
+import RepositoryList from "./components/RepositoryList";
+
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
+    <RepositoryList />
+);
+~~~
+
+A saida esperada na tela é:
+
+![Alt text](image-2.png)
+
+A nossa lista de repositorios aparecendo da forma que nos queremos, isso é no minimo mágico, diria eu.
+
+Porém, até aqui, sem nenhuma novidade, correto?
+
+<a name="reactjs-jsx"></a>
+
+###### 📈 - Introdução ao JSX
+
+Agora que conhecemos um pouco sobre componentes, vem a parte mais legal na minha opiniao, o JSX.
+
+JSX, a grosso modo, é a capacidade de misturar códigos JavaScript com Códigos HTML, literalmente misturar, exemplo: Eu quero que o nome dos repositorios seja pegado através de uma váriavel, que contém "Matheus" como valor, eu posso? Sim, da seguinte maneira:
+
+~~~ javascript
+export default function RepositoryList() {
+    const repositoryName = "Matheus";
+
+    return(
+        <section className="repository-list">
+            <h1>Lista de repositórios</h1>
+
+            <ul>
+                <li>
+                    <strong>{repositoryName}</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>{repositoryName}</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>{repositoryName}</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>{repositoryName}</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>{repositoryName}</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+                <li>
+                    <strong>{repositoryName}</strong>
+
+                    <p>Forms in React</p>
+
+                    <a href="">Acessar repositorio</a>
+                </li>
+            </ul>
+        </section>
+    );
+}
+~~~
+
+ou seja, eu pego o valor da variável *repositoryName* e interpolo ela no HTML através do conjunto de pares, e no HTML a saida seria:
+
+![Alt text](image-3.png)
+
+Como o esperado, isso abre um leque de possibilidades, como por exemplo, criar um array que contém N nomes e iterar-los com através do método ***.map*** e renderizar cada nome de repositorio dinamicamente, isso funcionaria mais ou menos assim:
+
+~~~ javascript
+export default function RepositoryList() {
+    const repositoryName = ["Matheus", "José", "Alberto", "Maria", "Clara"];
+
+    return(
+        <section className="repository-list">
+            <h1>Lista de repositórios</h1>
+
+            <ul>
+                {
+                    repositoryName.map((item) => <li key={item.toString()}><strong>{item}</strong><p>Forms in React</p><a href="">Acessar repositorio</a></li>)
+                }
+            </ul>
+        </section>
+    );
+}
+~~~
+
+Com a saida resultando em:
+
+![Alt text](image-4.png)
+
+Não se assustem caso não entenda, isso começará a ficar mais claro conforme for passando o tempo, porém, um ótimo exercicio seria:
+
+1) Dada a determinada lista de objetos: [{id: "1", name: "Pedro", age: "18"}, {id: "2", name: "Ana", age: "12"}, {id:"3", name: "Marta", age: "45"}] itere sobre cada indice desse objeto e apresente-os na tela, usando uma lista, a saida deve ser algo parecido com isso:
+
+![Alt text](image-5.png)
+
 
 [Voltar para a sessão de navegação.](#navegação)
 
