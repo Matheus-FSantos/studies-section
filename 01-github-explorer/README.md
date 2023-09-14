@@ -14,7 +14,7 @@ Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como
 - [Aula 01 - Arquitetura do REACT](#arquitetura)
 - [Aula 02 - Babel](#babel)
 - [Aula 03 - Webpack](#webpack)
-- [Aula 04 - React.JS](#reactjs)
+- [Aula 04 - Configurando o React.JS](#reactjs)
     - [Aula 04.1 - Auto-import do React nos arquivos](#auto-import)
     - [Aula 04.2 - Build mais rápido no escopo de desenvolvimento (parte 01)](#scope-pt-1)
     - [Aula 04.3 - Melhorando o arquivo estático (index.html)](#html-webpack-plugin)
@@ -22,6 +22,7 @@ Nesta sessão iramos adentrar um pouco mais no ecossistema React e entender como
     - [Aula 04.5 - Configurando o source-map](#source-map)
     - [Aula 04.6 - Ambiente de Desenvolvimento e Produção, com cross-env (Parte 02)](#cross-env)
     - [Aula 04.7 - Folhas de estilo (style-loader e css-loader)](#style-loader&css-loader)
+    - [Aula 04.7 - Folhas de estilo (sass-loader e node-sass, NÃO FUNCIONANDO AINDA)](#sass-loader&node-sass)
 
 <a name="arquitetura"></a>
 
@@ -215,7 +216,7 @@ e dentro do index.jsx (o meu arquivo principal configurado no webpack) eu tenho:
 
 ~~~ javascript
 import React from "react";
-import { App } from "./App";
+import App from "./App";
 ~~~
 
 > Note que ao importar o arquivo App.jsx eu não preciso informar se ele é .jsx ou js, já que no arquivo ***webpack.config.js*** configuramos a propriedade ***resolve*** que já identifica, automaticamente, que o tipo desse arquivo *./App* é ".jsx"
@@ -235,7 +236,7 @@ Esse é simplesmente impossivel de saber o que está fazendo ASHUASHUA, porém, 
 
 <a name="reactjs"></a>
 
-##### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - React.JS (Aula 04)
+##### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - Configurando o React.JS (Aula 04)
 
 Bom, a partir desse momento já temos uma boa base sobre como funciona o Babel e como as aplicações web (no javascript) utilizam, conjuntamente, o babel e o webpack, podemos seguir para o React.JS em si.
 
@@ -267,6 +268,26 @@ Na estrutura React, podemos perceber que tudo é trabalhado atraves de component
 
 > Abaixo da div com id root tem o import do arquivo bundle.js, que na sessão de webpack (e na de babel também) explico um pouco mais sobre esse arquivo.
 
+Essa abordagem ainda funciona, porém, a partir do React 18 (se não me engano), foi lançado uma API que ativa o novo renderizador simultaneo e blablabla. Enfim, basicamente quando você utiliza essa renderização antiga ele solta alguns alertas no console informando que deve-se utilizar outra abordagem nova, por padrão, e tals.
+
+Para o console de vocês não ficar vermelhinho e vocês não acharem que isso é um bug catastrofico, entrei na documentação do React e entendi como funciona essa nossa *feature* e sua implementação, ela funciona exatamente da mesma forma, que é: *pega um componente XYZ e joga dentro do container HTML que tem o id igual ao especificado*, só que a implementação é um pouco diferente, ela ficaria assim:
+
+~~~ javascript
+import { createRoot } from "react-dom/client";
+
+/* Componente App criado anteriormente */
+import App from "./App";
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(<App />);
+~~~
+
+Bem mais código, porém, a primeiro momento não muda muita coisa. **A PRIMEIRO MOMENTO.**
+
+> Ao longo das proximas configurações eu continuarei usando a forma antiga, e vocês vão fazendo as alterações necessárias para essa forma quando se fizer necessário.
+
 <a name="auto-import"></a>
 
 ###### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1150px-React-icon.svg.png" width="20px" height="auto"> - Auto-import do React
@@ -280,7 +301,7 @@ import React from "react";
 import { render } from "react-dom";
 
 /* Components */
-import { App } from "./App";
+import App from "./App";
 
 render(<p>Hello world!</p>, document.getElementById("root"));
 ~~~
@@ -749,7 +770,7 @@ Agora que já entendemos o contexto em que estamos precisamos configurar os arqu
 
 Ambos trabalham em conjunto, no ambiente de desenvolvimento, para fazer com que sua aplicação funcione 100% da forma desejada.
 
-Agora que já sabemos que precisamos de ambos dos *loaders* devemos instalar-los, e para adicionar a dependencia deles, deve-mos usar: ```yarn add style-loader css-loader -D``` e definir mais uma regra dentro do arquivo *webpack.config.js*, a seguinte regra é exatamente igual ao dos arquivos ***.jsx***, porém, como precisamos de 2 loaders diferentes, devemos usar um array no **use**, ele ficará assim:
+Agora que já sabemos que precisamos de ambos dos *loaders* devemos instalar-los, e para adicionar a dependencia deles, deve-mos usar: ```yarn add style-loader css-loader -D```, caso esteja usando npm acredito que seja: ```npm install style-loader css-loader -D```, e definir mais uma regra dentro do arquivo *webpack.config.js*, a seguinte regra é exatamente igual ao dos arquivos ***.jsx***, porém, como precisamos de 2 loaders diferentes, devemos usar um array no **use**, ele ficará assim:
 
 ~~~ javascript
 module: {
@@ -808,6 +829,92 @@ module.exports = {
 ~~~
 
 E pronto! Sua aplicação estará pronta para utilização de arquivos de estilização!!!
+
+<a name="sass-loader&node-sass"></a>
+
+###### 🖌️ - Folhas de estilo (sass-loader, node-sass) - **NOT WORKING NOW**
+
+Essa sessão é apenas um adicional para quem gosta de utilizar arquivos SASS para estilização, que é o meu caso ASHUASHUASHUA.
+
+Bom, vocês provavelmente devem conhecer a extensão ```Watch SASS```, se vocês a utilizam e não querem deixar de utilizar pode pular essa sessão e partir para o próximo modulo, porém, eu não gosto muito dela pois compila o seu código SASS em .css e cria 2 arquivos adicionais, o que resulta em uma aplicação cheia de folhas de estilos diferentes, prático, porém, muito zuado.
+
+Para isso você pode baixar 1 loader adicional, e instalar o SASS na sua aplicação, eles são:
+
+- [X] sass-loader;
+- [X] node-sass.
+
+O ***sass-loader*** serve para "compilar" o código sass da sua aplicação, igual o style-loader e o css-loader, e o ***node-sass*** serve somente para instalar o sass na sua aplicação.
+
+Porém, antes de configurar o *webpack.config.js* deve-se instalar ambas dependencias como dependencia de desenvolvimento, para isso deve-se adicionar o seguinte comando: ```yarn add sass-loader node-sass -D```, caso esteja usando npm acredito que seja: ```npm install sass-loader node-sass -D```.
+
+Você pode adicionar uma regra nova para estilos SASS, arquivos que tem a extensão *.scss*, ela ficaria mais ou menos assim:
+
+~~~ javascript
+module: {
+    rules: [
+        {
+            test: /\.scss$/,
+            exclue: /node_modules/,
+            use: ['style-loader', 'css-loader', 'sass-loader']
+        }
+    ]
+}
+~~~
+
+Exatamente igual a configuração para arquivos *.css*, somente trocamos a extensão e adicionamos um loader a mais dentro da propriedade *use*
+
+O seu arquivo webpack.config.js deve ficar assim após concluir essa configuração:
+
+~~~ javascript
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+module.exports = {
+    mode: isDevelopment ? 'development' : 'production',
+    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+        static: path.resolve(__dirname, 'public')
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.scss$/,
+                exclue: /node_modules/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
+            }
+        ],
+    }
+};
+~~~
+
+***Isso permitirá que sua aplicação funcione tanto com arquivos .css e arquivos .scss.***
+
+> Caso queira que sua aplicação funcione somente com arquivos .scss, exclua a regra para os arquivos que tem extensões .css, e vice-versa.
 
 [Voltar para a sessão de navegação.](#navegação)
 
