@@ -1,1 +1,1 @@
-#RocketSeat Studies
+#Studies Section
